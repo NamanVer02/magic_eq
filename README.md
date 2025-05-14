@@ -1,97 +1,109 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Magic Equalizer Demo App
 
-# Getting Started
+A React Native application demonstrating how to use the Android Equalizer API to control the device's audio equalizer.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Features
 
-## Step 1: Start Metro
+- Control the Android device's audio equalizer
+- Adjust individual frequency bands
+- Select from available preset equalizer settings
+- Toggle equalizer on/off
+- Simple audio player for testing
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Requirements
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- React Native 0.79.1 or higher
+- Android device or emulator (not supported on iOS)
+- Android API level 19 or higher
 
-```sh
-# Using npm
-npm start
+## Installation
 
-# OR using Yarn
-yarn start
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/magic_eq.git
+cd magic_eq
 ```
 
-## Step 2: Build and run your app
+2. Install dependencies:
+```bash
+npm install
+```
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+3. Link native modules:
+```bash
+npx react-native-asset
+```
 
-### Android
+4. Add a sample audio file (optional):
+To test with audio playback, add an audio file named `sample.wav` or `sample.mp3` to:
+```
+android/app/src/main/res/raw/
+```
 
-```sh
-# Using npm
+## Running the App
+
+To run the application on an Android device or emulator:
+
+```bash
 npm run android
-
-# OR using Yarn
-yarn android
 ```
 
-### iOS
+## How It Works
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+This demo app uses the Android [Equalizer API](https://developer.android.com/reference/android/media/audiofx/Equalizer) through a custom React Native native module. The native module is implemented in Kotlin and exposed to JavaScript through React Native's bridge.
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+### Key Components:
 
-```sh
-bundle install
-```
+1. **EqualizerModule.kt** - Native Kotlin module that interfaces with the Android Equalizer API
+2. **EqualizerPackage.kt** - Registers the native module with React Native
+3. **EqualizerModule.ts** - TypeScript interface for the native module
+4. **EqualizerView.tsx** - React Native UI component for controlling the equalizer
+5. **AudioPlayer.tsx** - Simple audio player for testing the equalizer
 
-Then, and every time you update your native dependencies, run:
+### Native Module API
 
-```sh
-bundle exec pod install
-```
+The native module exposes the following methods:
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+- `initialize(audioSessionId: number)` - Initialize the equalizer for a specific audio session
+- `release()` - Release equalizer resources
+- `setEnabled(enabled: boolean)` - Enable or disable the equalizer
+- `isEnabled()` - Check if the equalizer is enabled
+- `getNumberOfBands()` - Get the number of frequency bands
+- `getBandFreqRange(band: number)` - Get the frequency range for a band
+- `getCenterFreq(band: number)` - Get the center frequency for a band
+- `getBandLevel(band: number)` - Get the gain level for a band
+- `setBandLevel(band: number, level: number)` - Set the gain level for a band
+- `getBandLevelRange()` - Get the min/max values for band levels
+- `getNumberOfPresets()` - Get the number of available presets
+- `getPresetName(preset: number)` - Get the name of a preset
+- `usePreset(preset: number)` - Apply a preset
+- `getCurrentPreset()` - Get the current preset
+- `getAllPresets()` - Get all available presets
+- `getAllBandLevels()` - Get levels for all bands
 
-```sh
-# Using npm
-npm run ios
+## Customizing
 
-# OR using Yarn
-yarn ios
-```
+### Adding Your Own Audio Files
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+To test with your own audio files:
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+1. Add audio files to `android/app/src/main/res/raw/`
+2. Update the AudioPlayer component to use your files
 
-## Step 3: Modify your app
+### Extending the Equalizer
 
-Now that you have successfully run the app, let's make changes!
+To add more features:
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+1. Extend the native module with additional methods
+2. Update the TypeScript interface
+3. Add new UI controls in the React components
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## Limitations
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+- This demo only supports Android, as iOS does not provide a public API for system-wide equalizer control
+- The equalizer affects all audio output on the device, not just the demo app
+- Some devices may not support all equalizer features or may have limitations
 
-## Congratulations! :tada:
+## License
 
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+MIT
