@@ -6,14 +6,18 @@ import React, {useEffect} from 'react';
 import {
   SafeAreaView,
   StatusBar,
-  StyleSheet,
   Platform,
   View,
   Text,
 } from 'react-native';
+import {styled} from 'nativewind';
 
 import EqualizerView from './src/EqualizerView';
 import AudioPlayer from './src/AudioPlayer';
+
+const StyledView = styled(View);
+const StyledText = styled(Text);
+const StyledSafeAreaView = styled(SafeAreaView);
 
 function App(): React.JSX.Element {
   // Hide navigation bar on Android
@@ -25,61 +29,27 @@ function App(): React.JSX.Element {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <StyledSafeAreaView className="flex-1 bg-black">
       <StatusBar hidden={true} />
 
       {Platform.OS === 'android' ? (
-        <View style={styles.contentContainer}>
-          <View style={styles.topSection}>
+        <StyledView className="flex-1 flex-col">
+          <StyledView className="flex-[0.4] bg-black justify-center">
             <AudioPlayer />
-          </View>
-          <View style={styles.bottomSection}>
+          </StyledView>
+          <StyledView className="flex-[0.6] bg-black px-0 pt-0">
             <EqualizerView />
-          </View>
-        </View>
+          </StyledView>
+        </StyledView>
       ) : (
-        <View style={styles.unsupportedContainer}>
-          <Text style={styles.unsupportedText}>
+        <StyledView className="flex-1 justify-center items-center p-5 bg-black">
+          <StyledText className="text-base text-center text-white">
             The Equalizer API is currently only supported on Android devices.
-          </Text>
-        </View>
+          </StyledText>
+        </StyledView>
       )}
-    </SafeAreaView>
+    </StyledSafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000000',
-  },
-  contentContainer: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-  topSection: {
-    flex: 0.4,
-    backgroundColor: '#000000',
-    justifyContent: 'center',
-  },
-  bottomSection: {
-    flex: 0.6,
-    backgroundColor: '#000000',
-    paddingHorizontal: 0,
-    paddingTop: 0,
-  },
-  unsupportedContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#000000',
-  },
-  unsupportedText: {
-    fontSize: 16,
-    textAlign: 'center',
-    color: '#FFFFFF',
-  },
-});
 
 export default App;
