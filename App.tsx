@@ -2,7 +2,7 @@
  * Magic Equalizer Demo App
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -10,22 +10,33 @@ import {
   Platform,
   View,
   Text,
-  ScrollView,
 } from 'react-native';
 
 import EqualizerView from './src/EqualizerView';
 import AudioPlayer from './src/AudioPlayer';
 
 function App(): React.JSX.Element {
+  // Hide navigation bar on Android
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      StatusBar.setHidden(true);
+      // This would normally be done with native modules, but here we're just hiding the status bar
+    }
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#F5F5F5" />
-      
+      <StatusBar hidden={true} />
+
       {Platform.OS === 'android' ? (
-        <ScrollView style={styles.scrollView}>
-          <AudioPlayer />
-          <EqualizerView />
-        </ScrollView>
+        <View style={styles.contentContainer}>
+          <View style={styles.topSection}>
+            <AudioPlayer />
+          </View>
+          <View style={styles.bottomSection}>
+            <EqualizerView />
+          </View>
+        </View>
       ) : (
         <View style={styles.unsupportedContainer}>
           <Text style={styles.unsupportedText}>
@@ -40,21 +51,34 @@ function App(): React.JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#000000',
   },
-  scrollView: {
+  contentContainer: {
     flex: 1,
+    flexDirection: 'column',
+  },
+  topSection: {
+    flex: 0.4,
+    backgroundColor: '#000000',
+    justifyContent: 'center',
+  },
+  bottomSection: {
+    flex: 0.6,
+    backgroundColor: '#000000',
+    paddingHorizontal: 0,
+    paddingTop: 0,
   },
   unsupportedContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    backgroundColor: '#000000',
   },
   unsupportedText: {
     fontSize: 16,
     textAlign: 'center',
-    color: '#666666',
+    color: '#FFFFFF',
   },
 });
 
