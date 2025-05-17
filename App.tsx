@@ -11,9 +11,8 @@ import {
   Text,
 } from 'react-native';
 import {styled} from 'nativewind';
-
-import EqualizerView from './src/EqualizerView';
-import AudioPlayer from './src/AudioPlayer';
+import Dashboard from './src/screens/Dashboard';
+import Moods from './src/screens/Moods';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -33,14 +32,8 @@ function App(): React.JSX.Element {
       <StatusBar hidden={true} />
 
       {Platform.OS === 'android' ? (
-        <StyledView className="flex-1 flex-col">
-          <StyledView className="flex-[0.4] bg-black justify-center">
-            <AudioPlayer />
-          </StyledView>
-          <StyledView className="flex-[0.6] bg-black px-0 pt-0">
-            <EqualizerView />
-          </StyledView>
-        </StyledView>
+        <Dashboard />
+        // <Moods />
       ) : (
         <StyledView className="flex-1 justify-center items-center p-5 bg-black">
           <StyledText className="text-base text-center text-white">
