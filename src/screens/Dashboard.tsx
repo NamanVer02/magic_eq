@@ -11,10 +11,12 @@ import {
   NativeModules,
   DeviceEventEmitter,
   Image,
+  SafeAreaView
 } from 'react-native';
 import Slider from '@react-native-community/slider';
 import Sound from 'react-native-sound';
 import EqualizerModule, {BandLevel, Preset} from '../services/EqualizerModule';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 // Enable playback in silence mode
 Sound.setCategory('Playback');
@@ -272,150 +274,129 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <View className="flex-1 bg-black">
-      {/* Media Player Section - Reduced padding and spacing */}
-      <View className="flex-1 p-4">
-        <Text className="text-xl text-white font-bold text-center mb-3">
-          Audio Dashboard
-        </Text>
+    <SafeAreaView className="flex-1 bg-black">
+      <View className="flex-1 bg-black mt-6">
+        {/* Media Player Section - Reduced padding and spacing */}
+        <View className="flex-1 p-4">
+          <Text className="text-xl text-white font-bold text-center mb-3">
+            Audio Dashboard
+          </Text>
 
-        <View className="items-center">
-          {/* Smaller Album Art */}
-          <View className="mb-3">
-            {mediaInfo?.artwork ? (
-              <Image
-                source={{uri: mediaInfo.artwork}}
-                style={{
-                  width: 140,
-                  height: 140,
-                  borderRadius: 70,
-                  backgroundColor: '#333333',
-                }}
-              />
-            ) : (
-              <View className="w-[140] h-[140] rounded-full justify-center items-center bg-neutral-800">
-                <Text className="text-5xl text-white font-bold">
-                  {mediaInfo?.title?.charAt(0) ||
-                    mediaInfo?.artist?.charAt(0) ||
-                    '♫'}
-                </Text>
-              </View>
-            )}
-          </View>
+          <View className="items-center">
+            {/* Smaller Album Art */}
+            <View className="mb-3">
+              {mediaInfo?.artwork ? (
+                <Image
+                  source={{uri: mediaInfo.artwork}}
+                  style={{
+                    width: 140,
+                    height: 140,
+                    borderRadius: 70,
+                    backgroundColor: '#333333',
+                  }}
+                />
+              ) : (
+                <View className="w-[140] h-[140] rounded-full justify-center items-center bg-neutral-800">
+                  <Icon name="musical-note" size={48} color="#FFFFFF" />
+                </View>
+              )}
+            </View>
 
-          {/* Title and Artist - More compact */}
-          <View className="w-full items-center mb-2">
-            <Text
-              className="text-xl text-white font-bold mb-1 text-center"
-              numberOfLines={1}>
-              {mediaInfo?.title || 'Unknown Title'}
-            </Text>
-            <Text
-              className="text-base text-neutral-300 mb-1 text-center"
-              numberOfLines={1}>
-              {mediaInfo?.artist || 'Unknown Artist'}
-            </Text>
-            {mediaInfo?.packageName && (
-              <Text className="text-xs text-neutral-400 text-center">
-                via {getAppName(mediaInfo.packageName)}
-              </Text>
-            )}
-          </View>
-
-          {/* Playback Controls */}
-          <View className="flex-row justify-center items-center mb-3 w-full">
-            <TouchableOpacity
-              className="p-2 mx-4"
-              onPress={() => handleSkip('prev')}>
-              <Text className="text-2xl text-white">⏮</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              className="w-[50] h-[50] rounded-full bg-white justify-center items-center mx-4"
-              onPress={togglePlayback}>
-              <Text className="text-xl text-black">
-                {mediaInfo?.isPlaying ? '⏸' : '▶'}
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              className="p-2 mx-4"
-              onPress={() => handleSkip('next')}>
-              <Text className="text-2xl text-white">⏭</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Equalizer toggle button removed */}
-        </View>
-      </View>
-
-      {/* Equalizer Section - Fixed at bottom with white background, always visible */}
-      <View className="bg-white rounded-t-xl px-4 pt-3 p-10 h-1/2">
-        <View className="flex-row justify-between items-center mb-8">
-          <Text className="text-lg text-black font-bold">Audio Equalizer</Text>
-          <View className="flex-row items-center">
-            <Text className="text-sm text-black mr-2">Enabled</Text>
-            <Switch
-              value={isEqualizerEnabled}
-              onValueChange={toggleEqualizerEnabled}
-              trackColor={{false: '#767577', true: '#000000'}}
-              thumbColor={isEqualizerEnabled ? '#FFFFFF' : '#f4f3f4'}
-            />
-          </View>
-        </View>
-
-        {/* Presets */}
-        {/* <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          className="max-h-10 mb-3"
-          contentContainerStyle={{paddingVertical: 3}}>
-          {presets.map(preset => (
-            <TouchableOpacity
-              key={preset.id}
-              className={`bg-neutral-200 px-4 py-1 rounded-full mr-2 border border-neutral-300 ${
-                currentPreset === preset.id ? 'bg-black border-black' : ''
-              }`}
-              onPress={() => selectPreset(preset.id)}>
+            {/* Title and Artist - More compact */}
+            <View className="w-full items-center mb-2">
               <Text
-                className={`text-xs font-medium ${
-                  currentPreset === preset.id ? 'text-white' : 'text-black'
-                }`}>
-                {preset.name}
+                className="text-xl text-white font-bold mb-1 text-center"
+                numberOfLines={1}>
+                {mediaInfo?.title || 'Unknown Title'}
               </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView> */}
+              <Text
+                className="text-base text-neutral-300 mb-1 text-center"
+                numberOfLines={1}>
+                {mediaInfo?.artist || 'Unknown Artist'}
+              </Text>
+              {mediaInfo?.packageName && (
+                <Text className="text-xs text-neutral-400 text-center">
+                  via {getAppName(mediaInfo.packageName)}
+                </Text>
+              )}
+            </View>
 
-        {/* Band Sliders */}
-        <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
-          {bandLevels.map(band => (
-            <View key={band.id} className="mb-2">
-              <View className="flex-row justify-between mb-1">
-                <Text className="text-black text-xs font-medium">
-                  {formatFrequency(band.centerFreq)}
-                </Text>
-                <Text className="text-neutral-600 text-xs">
-                  {(band.level / 100).toFixed(1)} dB
-                </Text>
-              </View>
-              <Slider
-                style={{width: '100%', height: 36}}
-                minimumValue={bandLevelRange[0]}
-                maximumValue={bandLevelRange[1]}
-                value={band.level}
-                minimumTrackTintColor="#000000"
-                maximumTrackTintColor="#CCCCCC"
-                thumbTintColor="#000000"
-                onValueChange={value =>
-                  adjustBandLevel(band.id, Math.round(value))
-                }
+            {/* Playback Controls */}
+            <View className="flex-row justify-center items-center mb-3 w-full">
+              <TouchableOpacity
+                className="p-2 mx-4"
+                onPress={() => handleSkip('prev')}>
+                <Icon name="play-skip-back" size={28} color="#FFFFFF" />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                className="w-[50] h-[50] rounded-full bg-white justify-center items-center mx-4"
+                onPress={togglePlayback}>
+                <Icon
+                  name={mediaInfo?.isPlaying ? 'pause' : 'play'}
+                  size={24}
+                  color="#000000"
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                className="p-2 mx-4"
+                onPress={() => handleSkip('next')}>
+                <Icon name="play-skip-forward" size={28} color="#FFFFFF" />
+              </TouchableOpacity>
+            </View>
+
+            {/* Equalizer toggle button removed */}
+          </View>
+        </View>
+
+        {/* Equalizer Section - Fixed at bottom with white background, always visible */}
+        <View className="bg-white rounded-t-xl px-4 pt-3 p-10 h-1/2">
+          <View className="flex-row justify-between items-center mb-8">
+            <Text className="text-lg text-black font-bold">
+              Audio Equalizer
+            </Text>
+            <View className="flex-row items-center">
+              <Text className="text-sm text-black mr-2">Enabled</Text>
+              <Switch
+                value={isEqualizerEnabled}
+                onValueChange={toggleEqualizerEnabled}
+                trackColor={{false: '#767577', true: '#000000'}}
+                thumbColor={isEqualizerEnabled ? '#FFFFFF' : '#f4f3f4'}
               />
             </View>
-          ))}
-        </ScrollView>
+          </View>
+
+          {/* Band Sliders */}
+          <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
+            {bandLevels.map(band => (
+              <View key={band.id} className="mb-2">
+                <View className="flex-row justify-between mb-1">
+                  <Text className="text-black text-xs font-medium">
+                    {formatFrequency(band.centerFreq)}
+                  </Text>
+                  <Text className="text-neutral-600 text-xs">
+                    {(band.level / 100).toFixed(1)} dB
+                  </Text>
+                </View>
+                <Slider
+                  style={{width: '100%', height: 36}}
+                  minimumValue={bandLevelRange[0]}
+                  maximumValue={bandLevelRange[1]}
+                  value={band.level}
+                  minimumTrackTintColor="#000000"
+                  maximumTrackTintColor="#CCCCCC"
+                  thumbTintColor="#000000"
+                  onValueChange={value =>
+                    adjustBandLevel(band.id, Math.round(value))
+                  }
+                />
+              </View>
+            ))}
+          </ScrollView>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
