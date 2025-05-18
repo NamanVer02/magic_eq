@@ -22,9 +22,7 @@ type RootStackParamList = {
   Presets: undefined;
 };
 
-const Moods: React.FC<{navigation: any}> = ({
-  navigation,
-}) => {
+const Moods: React.FC<{navigation: any}> = ({navigation}) => {
   const [selectedMood, setSelectedMood] = useState<string>('relaxed');
   const [customMood, setCustomMood] = useState<string>(
     'I need to relax after a stressful day',
@@ -65,7 +63,7 @@ const Moods: React.FC<{navigation: any}> = ({
       onPress={() => handleMoodSelection(mood.id)}>
       <Text className="text-2xl mb-2">{mood.emoji}</Text>
       <Text
-        className={`text-sm font-medium ${
+        className={`text-sm font-poppins-medium ${
           selectedMood === mood.id ? 'text-black' : 'text-white'
         }`}>
         {mood.label}
@@ -81,16 +79,16 @@ const Moods: React.FC<{navigation: any}> = ({
     <SafeAreaView className="flex-1 bg-black">
       <ScrollView className="flex-1 px-4">
         {/* Header */}
-        <Text className="text-2xl text-white font-bold text-center mt-5 mb-2">
+        <Text className="text-2xl text-white font-poppins-bold text-center mt-5 mb-2">
           Mood Equalizer
         </Text>
-        <Text className="text-base text-neutral-400 text-center mb-8">
+        <Text className="text-base text-neutral-400 font-poppins-regular text-center mb-8">
           Tell us how you feel, and we'll create the perfect sound for you
         </Text>
 
         {/* Mood Selection Section */}
         <View className="mb-8">
-          <Text className="text-lg text-white font-semibold mb-4">
+          <Text className="text-lg text-white font-poppins-semibold mb-4">
             Choose your mood:
           </Text>
 
@@ -101,11 +99,11 @@ const Moods: React.FC<{navigation: any}> = ({
 
           {/* Custom Mood Input */}
           <View className="mt-6">
-            <Text className="text-lg text-white font-semibold mb-4">
+            <Text className="text-lg text-white font-poppins-semibold mb-4">
               Or describe how you feel:
             </Text>
             <TextInput
-              className="w-full bg-neutral-800 border border-neutral-700 rounded-xl text-white p-4 text-base mb-4"
+              className="w-full bg-neutral-800 border border-neutral-700 rounded-xl text-white p-4 text-base font-poppins-regular mb-4"
               placeholder="E.g., 'I want to feel motivated while working out'"
               placeholderTextColor="#999"
               value={customMood}
@@ -118,7 +116,7 @@ const Moods: React.FC<{navigation: any}> = ({
           <TouchableOpacity
             className="bg-white rounded-full py-4 items-center mt-4 mb-2"
             onPress={generateEqualizer}>
-            <Text className="text-base text-black font-semibold">
+            <Text className="text-base text-black font-poppins-semibold">
               Generate Equalizer
             </Text>
           </TouchableOpacity>
@@ -128,15 +126,17 @@ const Moods: React.FC<{navigation: any}> = ({
         {showResult && (
           <View className="bg-neutral-800 rounded-xl p-5 mb-8">
             <View className="flex-row justify-between items-center mb-4">
-              <Text className="text-xl text-white font-bold">
+              <Text className="text-xl text-white font-poppins-bold">
                 Relaxation Preset
               </Text>
               <TouchableOpacity className="border border-white rounded-full px-4 py-2">
-                <Text className="text-sm text-white">Save Preset</Text>
+                <Text className="text-sm text-white font-poppins-regular">
+                  Save Preset
+                </Text>
               </TouchableOpacity>
             </View>
 
-            <Text className="text-neutral-400 text-sm leading-5 mb-5">
+            <Text className="text-neutral-400 text-sm font-poppins-regular leading-5 mb-5">
               This equalizer setting enhances low frequencies for a warm,
               calming sound while reducing harsh high frequencies to help you
               unwind and de-stress.
@@ -187,7 +187,7 @@ const Moods: React.FC<{navigation: any}> = ({
             <TouchableOpacity
               className="bg-white rounded-full py-4 items-center"
               onPress={applyToEqualizer}>
-              <Text className="text-base text-black font-semibold">
+              <Text className="text-base text-black font-poppins-semibold">
                 Apply to Equalizer
               </Text>
             </TouchableOpacity>
@@ -199,12 +199,14 @@ const Moods: React.FC<{navigation: any}> = ({
           <TouchableOpacity
             className="border border-neutral-700 rounded-full px-5 py-3"
             onPress={() => navigation.goBack()}>
-            <Text className="text-sm text-white">Back to Player</Text>
+            <Text className="text-sm text-white font-poppins-regular">
+              Back to Player
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             className="bg-white rounded-full px-5 py-3"
             onPress={() => navigation.navigate('Presets')}>
-            <Text className="text-sm text-black font-medium">
+            <Text className="text-sm text-black font-poppins-medium">
               View All Presets
             </Text>
           </TouchableOpacity>

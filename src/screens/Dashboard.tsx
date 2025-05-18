@@ -266,7 +266,7 @@ const Dashboard: React.FC = () => {
     return (
       <View className="flex-1 bg-black p-4">
         <ActivityIndicator size="large" color="#FFFFFF" />
-        <Text className="text-white mt-3 text-base">
+        <Text className="text-white mt-3 text-base font-poppins-regular">
           Loading Audio Dashboard...
         </Text>
       </View>
@@ -276,12 +276,23 @@ const Dashboard: React.FC = () => {
   return (
     <SafeAreaView className="flex-1 bg-black">
       <View className="flex-1 bg-black mt-6">
-        {/* Media Player Section - Reduced padding and spacing */}
-        <View className="flex-1 p-4">
-          <Text className="text-xl text-white font-bold text-center mb-3">
+        {/* Header */}
+        <View className="flex-row justify-between items-center px-4 py-3">
+          <TouchableOpacity>
+            <Icon name="chevron-back" size={24} color="#FFFFFF" />
+          </TouchableOpacity>
+
+          <Text className="text-xl text-white font-poppins-bold">
             Audio Dashboard
           </Text>
 
+          <TouchableOpacity>
+            <Icon name="ellipsis-vertical" size={24} color="#FFFFFF" />
+          </TouchableOpacity>
+        </View>
+
+        {/* Media Player Section - Reduced padding and spacing */}
+        <View className="flex-1 p-4">
           <View className="items-center">
             {/* Smaller Album Art */}
             <View className="mb-3">
@@ -305,17 +316,17 @@ const Dashboard: React.FC = () => {
             {/* Title and Artist - More compact */}
             <View className="w-full items-center mb-2">
               <Text
-                className="text-xl text-white font-bold mb-1 text-center"
+                className="text-xl text-white font-poppins-bold mb-1 text-center"
                 numberOfLines={1}>
                 {mediaInfo?.title || 'Unknown Title'}
               </Text>
               <Text
-                className="text-base text-neutral-300 mb-1 text-center"
+                className="text-base text-neutral-300 font-poppins-regular mb-1 text-center"
                 numberOfLines={1}>
                 {mediaInfo?.artist || 'Unknown Artist'}
               </Text>
               {mediaInfo?.packageName && (
-                <Text className="text-xs text-neutral-400 text-center">
+                <Text className="text-xs text-neutral-400 font-poppins-regular text-center">
                   via {getAppName(mediaInfo.packageName)}
                 </Text>
               )}
@@ -345,19 +356,19 @@ const Dashboard: React.FC = () => {
                 <Icon name="play-skip-forward" size={28} color="#FFFFFF" />
               </TouchableOpacity>
             </View>
-
-            {/* Equalizer toggle button removed */}
           </View>
         </View>
 
         {/* Equalizer Section - Fixed at bottom with white background, always visible */}
         <View className="bg-white rounded-t-xl px-4 pt-3 p-10 h-1/2">
           <View className="flex-row justify-between items-center mb-8">
-            <Text className="text-lg text-black font-bold">
+            <Text className="text-lg text-black font-poppins-bold">
               Audio Equalizer
             </Text>
             <View className="flex-row items-center">
-              <Text className="text-sm text-black mr-2">Enabled</Text>
+              <Text className="text-sm text-black font-poppins-regular mr-2">
+                Enabled
+              </Text>
               <Switch
                 value={isEqualizerEnabled}
                 onValueChange={toggleEqualizerEnabled}
@@ -372,10 +383,10 @@ const Dashboard: React.FC = () => {
             {bandLevels.map(band => (
               <View key={band.id} className="mb-2">
                 <View className="flex-row justify-between mb-1">
-                  <Text className="text-black text-xs font-medium">
+                  <Text className="text-black text-xs font-poppins-medium">
                     {formatFrequency(band.centerFreq)}
                   </Text>
-                  <Text className="text-neutral-600 text-xs">
+                  <Text className="text-neutral-600 text-xs font-poppins-regular">
                     {(band.level / 100).toFixed(1)} dB
                   </Text>
                 </View>
@@ -397,7 +408,7 @@ const Dashboard: React.FC = () => {
         </View>
       </View>
     </SafeAreaView>
-  );
+  ); 
 };
 
 export default Dashboard;
