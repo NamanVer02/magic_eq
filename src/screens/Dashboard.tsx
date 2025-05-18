@@ -12,7 +12,6 @@ import {
   DeviceEventEmitter,
   Image,
 } from 'react-native';
-import {useColorScheme} from 'nativewind';
 import Slider from '@react-native-community/slider';
 import Sound from 'react-native-sound';
 import EqualizerModule, {BandLevel, Preset} from '../services/EqualizerModule';
