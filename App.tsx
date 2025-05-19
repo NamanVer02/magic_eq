@@ -15,6 +15,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Dashboard from './src/screens/Dashboard';
 import Moods from './src/screens/Moods';
+import PagerView from 'react-native-pager-view';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -36,21 +37,22 @@ function App(): React.JSX.Element {
     }
   }, []);
 
+  const [page, setPage] = React.useState(0);
+
   return (
     <SafeAreaProvider>
       <NavigationContainer>
         <StatusBar hidden={true} />
 
       {Platform.OS === 'android' ? (
-        <Stack.Navigator 
-          initialRouteName="Dashboard"
-          screenOptions={{
-            headerShown: false,
-            cardStyle: {backgroundColor: 'black'},
-          }}>
-          <Stack.Screen name="Dashboard" component={Dashboard} />
-          <Stack.Screen name="Moods" component={Moods} />
-        </Stack.Navigator>
+        <PagerView style={{flex: 1}} initialPage={0} onPageSelected={e => setPage(e.nativeEvent.position)}>
+          <View key="1" style={{flex: 1}}>
+            <Dashboard />
+          </View>
+          <View key="2" style={{flex: 1}}>
+            <Moods />
+          </View>
+        </PagerView>
       ) : (
         <StyledView className="flex-1 justify-center items-center p-5 bg-black">
           <StyledText className="text-base text-center text-white">

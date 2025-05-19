@@ -362,13 +362,7 @@ const Dashboard: React.FC = () => {
         </View>
 
         {/* Moods Button */}
-        <View className="absolute top-4 right-4 z-10">
-          <TouchableOpacity
-            className="bg-white rounded-full p-3"
-            onPress={() => navigation.navigate('Moods')}>
-            <Icon name="color-palette" size={24} color="#000000" />
-          </TouchableOpacity>
-        </View>
+        // (Removed swipe navigation button to Moods)
 
         {/* Equalizer Section - Fixed at bottom with white background, always visible */}
         <View className="bg-white rounded-t-xl px-4 pt-3 p-10 h-1/2">
