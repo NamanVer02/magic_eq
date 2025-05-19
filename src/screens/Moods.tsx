@@ -78,12 +78,14 @@ const Moods: React.FC<{navigation: MoodsScreenNavigationProp}> = ({navigation}) 
     <SafeAreaView className="flex-1 bg-black pt-2">
       <ScrollView className="flex-1 px-4" contentContainerStyle={{ paddingBottom: insets.bottom > 0 ? insets.bottom : 16 }}>
         {/* Header */}
-        <Text className="text-2xl text-white font-poppins-bold text-center mt-5 mb-2">
-          Mood Equalizer
-        </Text>
-        <Text className="text-base text-neutral-400 font-poppins-regular text-center mb-8">
-          Tell us how you feel, and we'll create the perfect sound for you
-        </Text>
+        <View className="px-4 py-3">
+          <Text className="text-2xl text-white font-poppins-bold text-center mt-2 mb-2">
+            Mood Equalizer
+          </Text>
+          <Text className="text-base text-neutral-400 font-poppins-regular text-center mb-4">
+            Tell us how you feel, and we'll create the perfect sound for you
+          </Text>
+        </View>
 
         {/* Mood Selection Section */}
         <View className="mb-8">
@@ -113,7 +115,7 @@ const Moods: React.FC<{navigation: MoodsScreenNavigationProp}> = ({navigation}) 
 
           {/* Generate Button */}
           <TouchableOpacity
-            className="bg-white rounded-full py-4 items-center mt-4 mb-2"
+            className="bg-white rounded-full py-4 items-center mt-4 mb-4"
             onPress={generateEqualizer}>
             <Text className="text-base text-black font-poppins-semibold">
               Generate Equalizer
@@ -129,7 +131,7 @@ const Moods: React.FC<{navigation: MoodsScreenNavigationProp}> = ({navigation}) 
                 Relaxation Preset
               </Text>
               <TouchableOpacity className="border border-white rounded-full px-4 py-2">
-                <Text className="text-sm text-white font-poppins-regular">
+                <Text className="text-sm text-white font-poppins-medium">
                   Save Preset
                 </Text>
               </TouchableOpacity>
@@ -167,17 +169,17 @@ const Moods: React.FC<{navigation: MoodsScreenNavigationProp}> = ({navigation}) 
         )}
 
         {/* Navigation Buttons */}
-        <View className="flex-row justify-between mb-8 pb-8">
+        <View className="mb-8 pb-4">
           <TouchableOpacity
-            className="border border-neutral-700 rounded-full px-5 py-3"
+            className="bg-white rounded-full py-4 items-center mb-4"
             onPress={() => navigation.navigate('Dashboard')}>
-            <Text className="text-sm text-white font-poppins-regular">
+            <Text className="text-base text-black font-poppins-semibold">
               Back to Player
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            className="bg-white rounded-full px-5 py-3">
-            <Text className="text-sm text-black font-poppins-medium">
+            className="border border-white rounded-full py-3 items-center">
+            <Text className="text-sm text-white font-poppins-medium">
               View All Presets
             </Text>
           </TouchableOpacity>

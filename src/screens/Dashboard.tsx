@@ -284,18 +284,13 @@ const Dashboard: React.FC = () => {
     <SafeAreaView className="flex-1 bg-black pt-2">
       <View className="flex-1 bg-black">
         {/* Header */}
-        <View className="flex-row justify-between items-center px-4 py-3">
-          <TouchableOpacity>
-            <Icon name="chevron-back" size={24} color="#FFFFFF" />
-          </TouchableOpacity>
-
-          <Text className="text-xl text-white font-poppins-bold">
+        <View className="px-4 py-3">
+          <Text className="text-2xl text-white font-poppins-bold text-center mt-2 mb-2">
             Audio Dashboard
           </Text>
-
-          <TouchableOpacity>
-            <Icon name="ellipsis-vertical" size={24} color="#FFFFFF" />
-          </TouchableOpacity>
+          <Text className="text-base text-neutral-400 font-poppins-regular text-center mb-4">
+            Adjust your sound to match your preferences
+          </Text>
         </View>
 
         {/* Media Player Section - Reduced padding and spacing */}
@@ -362,36 +357,66 @@ const Dashboard: React.FC = () => {
         </View>
 
         {/* Moods Button */}
-        // (Removed swipe navigation button to Moods)
+        <View className="px-4 mb-4">
+          <TouchableOpacity
+            className="bg-white rounded-full py-4 items-center"
+            onPress={() => navigation.navigate('Moods')}>
+            <Text className="text-base text-black font-poppins-semibold">
+              Find Mood Presets
+            </Text>
+          </TouchableOpacity>
+        </View>
 
-        {/* Equalizer Section - Fixed at bottom with white background, always visible */}
-        <View className="bg-white rounded-t-xl px-4 pt-3 p-10 h-1/2">
-          <View className="flex-row justify-between items-center mb-8">
-            <Text className="text-lg text-black font-poppins-bold">
+        {/* Equalizer Section - Styled to match Moods page */}
+        <View className="bg-neutral-800 rounded-t-xl px-4 pt-5 pb-8 h-1/2">
+          <View className="flex-row justify-between items-center mb-5">
+            <Text className="text-xl text-white font-poppins-bold">
               Audio Equalizer
             </Text>
             <View className="flex-row items-center">
-              <Text className="text-sm text-black font-poppins-regular mr-2">
+              <Text className="text-sm text-white font-poppins-regular mr-2">
                 Enabled
               </Text>
               <Switch
                 value={isEqualizerEnabled}
                 onValueChange={toggleEqualizerEnabled}
-                trackColor={{false: '#767577', true: '#000000'}}
-                thumbColor={isEqualizerEnabled ? '#FFFFFF' : '#f4f3f4'}
+                trackColor={{false: '#767577', true: '#FFFFFF'}}
+                thumbColor={isEqualizerEnabled ? '#000000' : '#f4f3f4'}
               />
             </View>
           </View>
 
+          {/* Presets Section */}
+          {presets.length > 0 && (
+            <View className="mb-5">
+              <Text className="text-base text-white font-poppins-semibold mb-3">
+                Presets:
+              </Text>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-4">
+                {presets.map((preset, index) => (
+                  <TouchableOpacity
+                    key={preset.id}
+                    className={`mr-3 px-4 py-2 rounded-full ${currentPreset === preset.id ? 'bg-white' : 'border border-neutral-700'}`}
+                    onPress={() => selectPreset(preset.id)}>
+                    <Text 
+                      className={`${currentPreset === preset.id ? 'text-black font-poppins-medium' : 'text-white font-poppins-regular'}`}>
+                      {preset.name}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </View>
+          )}
+
           {/* Band Sliders */}
           <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
             {bandLevels.map(band => (
-              <View key={band.id} className="mb-2">
+              <View key={band.id} className="mb-3">
                 <View className="flex-row justify-between mb-1">
-                  <Text className="text-black text-xs font-poppins-medium">
+                  <Text className="text-white text-xs font-poppins-medium">
                     {formatFrequency(band.centerFreq)}
                   </Text>
-                  <Text className="text-neutral-600 text-xs font-poppins-regular">
+                  <Text className="text-neutral-400 text-xs font-poppins-regular">
                     {(band.level / 100).toFixed(1)} dB
                   </Text>
                 </View>
@@ -400,9 +425,9 @@ const Dashboard: React.FC = () => {
                   minimumValue={bandLevelRange[0]}
                   maximumValue={bandLevelRange[1]}
                   value={band.level}
-                  minimumTrackTintColor="#000000"
-                  maximumTrackTintColor="#CCCCCC"
-                  thumbTintColor="#000000"
+                  minimumTrackTintColor="#FFFFFF"
+                  maximumTrackTintColor="#555555"
+                  thumbTintColor="#FFFFFF"
                   onValueChange={value =>
                     adjustBandLevel(band.id, Math.round(value))
                   }
@@ -410,6 +435,14 @@ const Dashboard: React.FC = () => {
               </View>
             ))}
           </ScrollView>
+          
+          {/* Save Preset Button */}
+          <TouchableOpacity 
+            className="border border-white rounded-full px-4 py-3 mt-4 items-center">
+            <Text className="text-sm text-white font-poppins-medium">
+              Save Current Settings
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
