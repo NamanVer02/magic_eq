@@ -11,8 +11,11 @@ import {
   NativeModules,
   DeviceEventEmitter,
   Image,
-  SafeAreaView
 } from 'react-native';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../App';
 import Slider from '@react-native-community/slider';
 import Sound from 'react-native-sound';
 import EqualizerModule, {BandLevel, Preset} from '../services/EqualizerModule';
@@ -34,7 +37,11 @@ interface MediaInfo {
   packageName?: string;
 }
 
+type DashboardScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Dashboard'>;
+
 const Dashboard: React.FC = () => {
+  const navigation = useNavigation<DashboardScreenNavigationProp>();
+  const insets = useSafeAreaInsets();
   // Media player states
   const [sound, setSound] = useState<Sound | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -274,8 +281,8 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-black">
-      <View className="flex-1 bg-black mt-6">
+    <SafeAreaView className="flex-1 bg-black pt-2">
+      <View className="flex-1 bg-black">
         {/* Header */}
         <View className="flex-row justify-between items-center px-4 py-3">
           <TouchableOpacity>
@@ -299,12 +306,7 @@ const Dashboard: React.FC = () => {
               {mediaInfo?.artwork ? (
                 <Image
                   source={{uri: mediaInfo.artwork}}
-                  style={{
-                    width: 140,
-                    height: 140,
-                    borderRadius: 70,
-                    backgroundColor: '#333333',
-                  }}
+                  className="w-[140] h-[140] rounded-full bg-neutral-800"
                 />
               ) : (
                 <View className="w-[140] h-[140] rounded-full justify-center items-center bg-neutral-800">
@@ -359,6 +361,15 @@ const Dashboard: React.FC = () => {
           </View>
         </View>
 
+        {/* Moods Button */}
+        <View className="absolute top-4 right-4 z-10">
+          <TouchableOpacity
+            className="bg-white rounded-full p-3"
+            onPress={() => navigation.navigate('Moods')}>
+            <Icon name="color-palette" size={24} color="#000000" />
+          </TouchableOpacity>
+        </View>
+
         {/* Equalizer Section - Fixed at bottom with white background, always visible */}
         <View className="bg-white rounded-t-xl px-4 pt-3 p-10 h-1/2">
           <View className="flex-row justify-between items-center mb-8">
@@ -391,7 +402,7 @@ const Dashboard: React.FC = () => {
                   </Text>
                 </View>
                 <Slider
-                  style={{width: '100%', height: 36}}
+                  className="w-full h-9"
                   minimumValue={bandLevelRange[0]}
                   maximumValue={bandLevelRange[1]}
                   value={band.level}

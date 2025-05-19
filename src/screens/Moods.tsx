@@ -5,8 +5,8 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  SafeAreaView,
 } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Define types
 interface Mood {
@@ -15,14 +15,13 @@ interface Mood {
   label: string;
 }
 
-// Define navigation param list
-type RootStackParamList = {
-  MoodEqualizer: undefined;
-  Equalizer: undefined;
-  Presets: undefined;
-};
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../App';
 
-const Moods: React.FC<{navigation: any}> = ({navigation}) => {
+type MoodsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Moods'>;
+
+const Moods: React.FC<{navigation: MoodsScreenNavigationProp}> = ({navigation}) => {
+  const insets = useSafeAreaInsets();
   const [selectedMood, setSelectedMood] = useState<string>('relaxed');
   const [customMood, setCustomMood] = useState<string>(
     'I need to relax after a stressful day',
@@ -51,7 +50,7 @@ const Moods: React.FC<{navigation: any}> = ({navigation}) => {
 
   const applyToEqualizer = (): void => {
     // Logic to apply the preset to the main equalizer
-    navigation.navigate('Equalizer');
+    navigation.navigate('Dashboard');
   };
 
   const renderMoodItem = (mood: Mood): React.ReactElement => (
@@ -76,8 +75,8 @@ const Moods: React.FC<{navigation: any}> = ({navigation}) => {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-black">
-      <ScrollView className="flex-1 px-4">
+    <SafeAreaView className="flex-1 bg-black pt-2">
+      <ScrollView className="flex-1 px-4" contentContainerStyle={{ paddingBottom: insets.bottom > 0 ? insets.bottom : 16 }}>
         {/* Header */}
         <Text className="text-2xl text-white font-poppins-bold text-center mt-5 mb-2">
           Mood Equalizer
@@ -145,42 +144,15 @@ const Moods: React.FC<{navigation: any}> = ({navigation}) => {
             {/* Equalizer Visualization */}
             <View className="h-30 bg-neutral-700 rounded-lg mb-5 overflow-hidden flex-row justify-between items-end px-2">
               {/* Explicit style objects instead of dynamic className for type safety */}
-              <View
-                style={{width: '8%', height: '75%'}}
-                className="bg-white rounded-t-sm"
-              />
-              <View
-                style={{width: '8%', height: '60%'}}
-                className="bg-white rounded-t-sm"
-              />
-              <View
-                style={{width: '8%', height: '45%'}}
-                className="bg-white rounded-t-sm"
-              />
-              <View
-                style={{width: '8%', height: '35%'}}
-                className="bg-white rounded-t-sm"
-              />
-              <View
-                style={{width: '8%', height: '30%'}}
-                className="bg-white rounded-t-sm"
-              />
-              <View
-                style={{width: '8%', height: '25%'}}
-                className="bg-white rounded-t-sm"
-              />
-              <View
-                style={{width: '8%', height: '20%'}}
-                className="bg-white rounded-t-sm"
-              />
-              <View
-                style={{width: '8%', height: '15%'}}
-                className="bg-white rounded-t-sm"
-              />
-              <View
-                style={{width: '8%', height: '10%'}}
-                className="bg-white rounded-t-sm"
-              />
+              <View className="w-[8%] h-[75%] bg-white rounded-t-sm" />
+              <View className="w-[8%] h-[60%] bg-white rounded-t-sm" />
+              <View className="w-[8%] h-[45%] bg-white rounded-t-sm" />
+              <View className="w-[8%] h-[35%] bg-white rounded-t-sm" />
+              <View className="w-[8%] h-[30%] bg-white rounded-t-sm" />
+              <View className="w-[8%] h-[25%] bg-white rounded-t-sm" />
+              <View className="w-[8%] h-[20%] bg-white rounded-t-sm" />
+              <View className="w-[8%] h-[15%] bg-white rounded-t-sm" />
+              <View className="w-[8%] h-[10%] bg-white rounded-t-sm" />
             </View>
 
             {/* Apply Button */}
@@ -195,17 +167,16 @@ const Moods: React.FC<{navigation: any}> = ({navigation}) => {
         )}
 
         {/* Navigation Buttons */}
-        <View className="flex-row justify-between mb-8">
+        <View className="flex-row justify-between mb-8 pb-8">
           <TouchableOpacity
             className="border border-neutral-700 rounded-full px-5 py-3"
-            onPress={() => navigation.goBack()}>
+            onPress={() => navigation.navigate('Dashboard')}>
             <Text className="text-sm text-white font-poppins-regular">
               Back to Player
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            className="bg-white rounded-full px-5 py-3"
-            onPress={() => navigation.navigate('Presets')}>
+            className="bg-white rounded-full px-5 py-3">
             <Text className="text-sm text-black font-poppins-medium">
               View All Presets
             </Text>
