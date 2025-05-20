@@ -75,8 +75,8 @@ const Moods: React.FC<{navigation: MoodsScreenNavigationProp}> = ({navigation}) 
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-black pt-2">
-      <ScrollView className="flex-1 px-4" contentContainerStyle={{ paddingBottom: insets.bottom > 0 ? insets.bottom : 16 }}>
+    <SafeAreaView className="flex-1 bg-black">
+      <ScrollView className="flex-1 px-4" contentContainerStyle={{ paddingBottom: insets.bottom > 0 ? insets.bottom : 16 }} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View className="px-4 py-3">
           <Text className="text-2xl text-white font-poppins-bold text-center mt-2 mb-2">
@@ -119,68 +119,6 @@ const Moods: React.FC<{navigation: MoodsScreenNavigationProp}> = ({navigation}) 
             onPress={generateEqualizer}>
             <Text className="text-base text-black font-poppins-semibold">
               Generate Equalizer
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Results Section */}
-        {showResult && (
-          <View className="bg-neutral-800 rounded-xl p-5 mb-8">
-            <View className="flex-row justify-between items-center mb-4">
-              <Text className="text-xl text-white font-poppins-bold">
-                Relaxation Preset
-              </Text>
-              <TouchableOpacity className="border border-white rounded-full px-4 py-2">
-                <Text className="text-sm text-white font-poppins-medium">
-                  Save Preset
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            <Text className="text-neutral-400 text-sm font-poppins-regular leading-5 mb-5">
-              This equalizer setting enhances low frequencies for a warm,
-              calming sound while reducing harsh high frequencies to help you
-              unwind and de-stress.
-            </Text>
-
-            {/* Equalizer Visualization */}
-            <View className="h-30 bg-neutral-700 rounded-lg mb-5 overflow-hidden flex-row justify-between items-end px-2">
-              {/* Explicit style objects instead of dynamic className for type safety */}
-              <View className="w-[8%] h-[75%] bg-white rounded-t-sm" />
-              <View className="w-[8%] h-[60%] bg-white rounded-t-sm" />
-              <View className="w-[8%] h-[45%] bg-white rounded-t-sm" />
-              <View className="w-[8%] h-[35%] bg-white rounded-t-sm" />
-              <View className="w-[8%] h-[30%] bg-white rounded-t-sm" />
-              <View className="w-[8%] h-[25%] bg-white rounded-t-sm" />
-              <View className="w-[8%] h-[20%] bg-white rounded-t-sm" />
-              <View className="w-[8%] h-[15%] bg-white rounded-t-sm" />
-              <View className="w-[8%] h-[10%] bg-white rounded-t-sm" />
-            </View>
-
-            {/* Apply Button */}
-            <TouchableOpacity
-              className="bg-white rounded-full py-4 items-center"
-              onPress={applyToEqualizer}>
-              <Text className="text-base text-black font-poppins-semibold">
-                Apply to Equalizer
-              </Text>
-            </TouchableOpacity>
-          </View>
-        )}
-
-        {/* Navigation Buttons */}
-        <View className="mb-8 pb-4">
-          <TouchableOpacity
-            className="bg-white rounded-full py-4 items-center mb-4"
-            onPress={() => navigation.navigate('Dashboard')}>
-            <Text className="text-base text-black font-poppins-semibold">
-              Back to Player
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            className="border border-white rounded-full py-3 items-center">
-            <Text className="text-sm text-white font-poppins-medium">
-              View All Presets
             </Text>
           </TouchableOpacity>
         </View>
