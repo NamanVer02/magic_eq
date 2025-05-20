@@ -356,17 +356,6 @@ const Dashboard: React.FC = () => {
           </View>
         </View>
 
-        {/* Moods Button */}
-        <View className="px-4 mb-4">
-          <TouchableOpacity
-            className="bg-white rounded-full py-4 items-center"
-            onPress={() => navigation.navigate('Moods')}>
-            <Text className="text-base text-black font-poppins-semibold">
-              Find Mood Presets
-            </Text>
-          </TouchableOpacity>
-        </View>
-
         {/* Equalizer Section - Styled to match Moods page */}
         <View className="bg-neutral-800 rounded-t-xl px-4 pt-5 pb-8 h-1/2">
           <View className="flex-row justify-between items-center mb-5">
