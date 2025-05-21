@@ -186,8 +186,6 @@ const Dashboard: React.FC = () => {
         prevLevels.map(band => (band.id === bandId ? {...band, level} : band)),
       );
 
-      // Presets are no longer valid when manually adjusting bands
-      setCurrentPreset(-1);
     } catch (error) {
       Alert.alert('Error', `Failed to adjust band level: ${error}`);
     }
